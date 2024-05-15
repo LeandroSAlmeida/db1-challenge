@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -34,6 +33,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.R
 import com.challenge.db1.components.AnimatedBorderCard
 import com.challenge.db1.components.TextFieldCustom
@@ -42,7 +43,7 @@ import com.challenge.db1.ui.theme.ColorSecundary
 import com.challenge.db1.ui.theme.ColorThird
 
 @Composable
-fun SignUp() {
+fun SignUp(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -194,9 +195,13 @@ fun SignUp() {
     }
 }
 
-@Preview
 @Composable
-private fun SignUpPreview() {
-    SignUp()
-    
+@Preview(showSystemUi = true)
+private fun FormLoginPreview() {
+    // Como a função FormLogin precisa de um NavController como parâmetro,
+    // vamos criar um NavController falso para uso na pré-visualização.
+    val navController = rememberNavController()
+
+    // Em seguida, chamamos a função FormLogin passando o NavController falso.
+    SignUp(navController = navController)
 }
