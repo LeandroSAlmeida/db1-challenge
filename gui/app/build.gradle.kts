@@ -51,11 +51,17 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.integration)
     val nav_version = "2.7.7"
+    val ktor_version: String by project
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-websockets:$ktor_version")
+    implementation("org.slf4j:slf4j-api:1.7.36")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -72,4 +78,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+configurations.testImplementation {
+    // Don't include two SLF4J implementations in unit tests
+    // Remove the logcat version, which doesn't work
+    exclude("org.slf4j", "slf4j-android")
 }

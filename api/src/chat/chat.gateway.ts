@@ -10,7 +10,7 @@ import {
 
 import { Server } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway(4000)
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -19,23 +19,23 @@ export class ChatGateway
   @WebSocketServer() io: Server;
 
   afterInit() {
-    this.logger.log('Initialized');
+    console.log('Initialized');
   }
 
   handleConnection(client: any, ...args: any[]) {
-    const { sockets } = this.io.sockets;
+    // const { sockets } = this.io.sockets;
 
-    this.logger.log(`Client id: ${client.id} connected`);
-    this.logger.debug(`Number of connected clients: ${sockets.size}`);
+    console.log(`Client id: ${client.id} connected`);
+    // this.logger.debug(`Number of connected clients: ${sockets.size}`);
   }
 
   handleDisconnect(client: any) {
-    this.logger.log(`Cliend id:${client.id} disconnected`);
+    console.log(`Cliend id:${client.id} disconnected`);
   }
 
   @SubscribeMessage('ping')
   handleMessage(client: any, data: any) {
-    this.logger.log(`Message received from client id: ${client.id}`);
+    console.log(`Message received from client id: ${client.id}`);
     this.logger.debug(`Payload: ${data}`);
     return {
       event: 'pong',
