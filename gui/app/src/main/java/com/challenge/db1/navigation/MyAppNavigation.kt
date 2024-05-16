@@ -1,5 +1,6 @@
 package com.challenge.db1.navigation
 
+import SkillsScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +19,10 @@ fun MyAppNavigation(){
 
         composable("signup",){
             SignUp(navController = navController)
+        }
+
+        composable("skills",){
+            SkillsScreen(navController = navController)
         }
     } )
 }

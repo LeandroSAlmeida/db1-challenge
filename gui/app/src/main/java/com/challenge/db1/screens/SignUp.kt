@@ -172,7 +172,7 @@ fun SignUp(navController: NavController) {
 
                     Button(
                         onClick = {
-                            // Lógica de cadastro aqui
+                            navController.navigate("skills")
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -185,7 +185,7 @@ fun SignUp(navController: NavController) {
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
-                            text = stringResource(id = R.string.txt_button_register),
+                            text = stringResource(id = R.string.txt_button_skills),
                             fontSize = 18.sp
                         )
                     }
