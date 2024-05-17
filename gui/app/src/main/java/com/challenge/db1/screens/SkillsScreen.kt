@@ -98,7 +98,7 @@ fun SkillsScreen(navController: NavController) {
 
         Button(
             onClick = {
-                // Lógica de cadastro aqui
+                navController.navigate("successful")
             },
             modifier = Modifier
                 .fillMaxWidth()
