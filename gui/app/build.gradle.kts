@@ -51,12 +51,13 @@ android {
 
 dependencies {
 
-    implementation(libs.integration)
+    //implementation(libs.integration) <-- Problema
     val nav_version = "2.7.7"
     val ktor_version: String by project
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
