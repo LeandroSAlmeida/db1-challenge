@@ -131,7 +131,11 @@ fun FormLogin(navController: NavController) {
                     Text(
                         text = stringResource(id = R.string.txt_forgot_password),
                         fontSize = 14.sp,
-                        color = Color.White
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+                            navController.navigate("forgotpassword")
+                        }
+
                     )
 
                 }

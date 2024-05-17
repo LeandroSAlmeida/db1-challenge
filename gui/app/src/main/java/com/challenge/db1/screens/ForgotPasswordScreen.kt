@@ -17,6 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.R
 import com.challenge.db1.components.AnimatedBorderCard
 import com.challenge.db1.components.TextFieldCustom
@@ -25,7 +27,7 @@ import com.challenge.db1.ui.theme.ColorSecundary
 import com.challenge.db1.ui.theme.ColorThird
 
 @Composable
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,6 +68,7 @@ fun ForgotPasswordScreen() {
         Spacer(modifier = Modifier.height(100.dp))
         Button(
             onClick = {
+                navController.navigate("login")
             },
             modifier = Modifier
                 .width(400.dp)
@@ -88,6 +91,7 @@ fun ForgotPasswordScreen() {
 
 @Composable
 @Preview(showBackground = true)
-fun ForgotPasswordScreenPreview() {
-    ForgotPasswordScreen()
+fun ForgotPasswordPreview() {
+    val navController = rememberNavController()
+    ForgotPasswordScreen(navController)
 }
