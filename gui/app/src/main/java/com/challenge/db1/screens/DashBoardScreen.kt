@@ -92,22 +92,7 @@ fun DashboardScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Botão de Ação
-        Button(
-            onClick = { /* Ação do botão */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = ColorThird,
-                contentColor = Color.White
-            )
-        ) {
-            Text(
-                text = "Pesquisar",
-                fontSize = 18.sp
-            )
-        }
+
     }
 }
 
