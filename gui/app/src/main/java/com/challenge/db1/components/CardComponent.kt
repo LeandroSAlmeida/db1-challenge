@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,11 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.challenge.db1.R
+import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.ui.theme.ColorThird
 
 @Composable
-fun CardComponent(){
-    Surface(Modifier.padding(8.dp),shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
+fun CardComponent(alunoEProfessor: AlunoEProfessor){
+
+    Surface(shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
 
         Column(
             Modifier
@@ -64,8 +67,8 @@ fun CardComponent(){
                         .size(imageSize)
                         .offset(y = imageSize/2)
                         .clip(shape = RoundedCornerShape(20.dp))
-                        .align(Alignment.BottomCenter)
-
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier = Modifier.height(imageSize/2))
@@ -73,14 +76,14 @@ fun CardComponent(){
             Column(modifier = Modifier
                 .padding(16.dp)) {
                 Text(
-                    text = "Nome",
+                    text = alunoEProfessor.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "Habilidades",
+                    text = alunoEProfessor.habilities,
                     Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
@@ -98,5 +101,9 @@ fun CardComponent(){
 @Preview
 @Composable
 fun CardComponentPreview(){
-    CardComponent()
+    CardComponent(
+        AlunoEProfessor(
+            name = "Leandro", null,true,"Java","Programar","Fiap"
+        )
+    )
 }
