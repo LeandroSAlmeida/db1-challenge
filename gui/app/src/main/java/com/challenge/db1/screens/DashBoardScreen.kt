@@ -1,4 +1,5 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.challenge.db1.components.UsersSection
+import com.challenge.db1.sampledata.SampleAlunos
 import com.challenge.db1.ui.theme.ColorPrimary
 import com.challenge.db1.ui.theme.ColorThird
 
@@ -33,18 +36,17 @@ import com.challenge.db1.ui.theme.ColorThird
 fun DashboardScreen(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
 
-    val students = listOf("Aluno 1", "Aluno 2", "Aluno 3", "Aluno 4", "Aluno 5")
-    val professors = listOf("Professor 1", "Professor 2", "Professor 3", "Professor 4", "Professor 5")
+    //val students = listOf("Aluno 1", "Aluno 2", "Aluno 3", "Aluno 4", "Aluno 5")
+    //val professors = listOf("Professor 1", "Professor 2", "Professor 3", "Professor 4", "Professor 5")
 
-    val filteredStudents = students.filter { it.contains(searchText, ignoreCase = true) }
-    val filteredProfessors = professors.filter { it.contains(searchText, ignoreCase = true) }
+    //val filteredStudents = students.filter { it.contains(searchText, ignoreCase = true) }
+    //val filteredProfessors = professors.filter { it.contains(searchText, ignoreCase = true) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(ColorPrimary)
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
     ) {
         // Campo de Pesquisa Avançada
         SearchTextField(
@@ -55,6 +57,19 @@ fun DashboardScreen(navController: NavController) {
                 .padding(bottom = 16.dp)
         )
 
+        Column(
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(35.dp)
+        ) {
+            Spacer(Modifier)
+            UsersSection("Alunos", alunosEProfessor = SampleAlunos)
+            UsersSection("Professores", alunosEProfessor = SampleAlunos)
+            UsersSection("ADM", alunosEProfessor = SampleAlunos)
+            Spacer(Modifier)
+        }
+
         // Lista de Alunos
         Text(
             text = "Alunos",
@@ -62,14 +77,14 @@ fun DashboardScreen(navController: NavController) {
             fontSize = 24.sp,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-        filteredStudents.forEach { student ->
-            Text(
-                text = student,
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
-        }
+//        filteredStudents.forEach { student ->
+//            Text(
+//                text = student,
+//                color = Color.White,
+//                fontSize = 18.sp,
+//                modifier = Modifier.padding(vertical = 4.dp)
+//            )
+//        }
 
         // Espaçamento entre as listas
         Spacer(modifier = Modifier.height(24.dp))
@@ -81,14 +96,14 @@ fun DashboardScreen(navController: NavController) {
             fontSize = 24.sp,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-        filteredProfessors.forEach { professor ->
-            Text(
-                text = professor,
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
-        }
+//        filteredProfessors.forEach { professor ->
+//            Text(
+//                text = professor,
+//                color = Color.White,
+//                fontSize = 18.sp,
+//                modifier = Modifier.padding(vertical = 4.dp)
+//            )
+//        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
