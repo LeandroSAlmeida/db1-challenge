@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -21,13 +22,18 @@ import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.ui.theme.ColorPrimary
 
 @Composable
-fun CardProductItem(alunoEProfessor: AlunoEProfessor, elevation: Dp = 4.dp) {
+fun CardProductItem(
+    alunoEProfessor: AlunoEProfessor,
+    modifier: Modifier = Modifier,
+    elevation: Dp = 4.dp
+) {
     Card(
-        modifier = Modifier
+        modifier
             .fillMaxWidth()
             .heightIn(150.dp),
-        elevation = CardDefaults.cardElevation(elevation)
-    ) {
+        elevation = CardDefaults.cardElevation(elevation),
+
+        ) {
         Column {
             Image(
                 painter = painterResource(id = R.drawable._4b6993eb_adf0_4bf8_bf62_c5139a360e0c),
@@ -40,8 +46,9 @@ fun CardProductItem(alunoEProfessor: AlunoEProfessor, elevation: Dp = 4.dp) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(ColorPrimary)
+                    .background(Color.White)
                     .padding(16.dp)
+
             ) {
                 Text(
                     text = alunoEProfessor.name
@@ -50,7 +57,17 @@ fun CardProductItem(alunoEProfessor: AlunoEProfessor, elevation: Dp = 4.dp) {
                     text = alunoEProfessor.habilities
                 )
             }
+            alunoEProfessor.academic_education?.let {
+                Text(
+                    text = alunoEProfessor.academic_education,
+                    Modifier
+                        .padding(16.dp)
+
+                )
+            }
         }
+
     }
 }
+
 
