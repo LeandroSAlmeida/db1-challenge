@@ -2,17 +2,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,16 +26,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.components.UsersSection
+import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.sampledata.SampleAlunos
+import com.challenge.db1.sampledata.SampleSections
 import com.challenge.db1.ui.theme.ColorPrimary
-import com.challenge.db1.ui.theme.ColorThird
 
 @Composable
-fun DashboardScreen(navController: NavController) {
+fun DashboardScreen(
+    navController: NavController,
+    sections: Map<String, List<AlunoEProfessor>>
+) {
     var searchText by remember { mutableStateOf("") }
-
-    //val students = listOf("Aluno 1", "Aluno 2", "Aluno 3", "Aluno 4", "Aluno 5")
-    //val professors = listOf("Professor 1", "Professor 2", "Professor 3", "Professor 4", "Professor 5")
 
     //val filteredStudents = students.filter { it.contains(searchText, ignoreCase = true) }
     //val filteredProfessors = professors.filter { it.contains(searchText, ignoreCase = true) }
@@ -57,17 +56,23 @@ fun DashboardScreen(navController: NavController) {
                 .padding(bottom = 16.dp)
         )
 
-        Column(
+        LazyColumn(
             Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(35.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(35.dp),
+            contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            Spacer(Modifier)
-            UsersSection("Alunos", alunosEProfessor = SampleAlunos)
-            UsersSection("Professores", alunosEProfessor = SampleAlunos)
-            UsersSection("ADM", alunosEProfessor = SampleAlunos)
-            Spacer(Modifier)
+
+            for (section in sections) {
+                val title = section.key
+                val alunoEProfessor = section.value
+                item {
+                    UsersSection(
+                        title = title,
+                        alunosEProfessor = alunoEProfessor
+                    )
+                }
+            }
         }
 
         // Lista de Alunos
@@ -120,7 +125,8 @@ fun SearchTextField(
     Box(
         modifier = modifier
             .background(Color.White, RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+
     ) {
         BasicTextField(
             value = searchText,
@@ -137,9 +143,9 @@ fun SearchTextField(
     }
 }
 
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-@Preview(showSystemUi = true)
-private fun DashBoardScreen() {
-    val navController = rememberNavController()
-    DashboardScreen(navController = navController)
+fun DashboardScreenPreview() {
+    DashboardScreen(sections = SampleSections, navController = rememberNavController())
 }
