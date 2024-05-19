@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.compose.material)
     //implementation(libs.integration) <-- Problema
     val nav_version = "2.7.7"
     val ktor_version: String by project
@@ -66,6 +67,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation ("io.coil-kt:coil-compose:1.4.0")
+
 
 
     implementation(libs.androidx.core.ktx)
