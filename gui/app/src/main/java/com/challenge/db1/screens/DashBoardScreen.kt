@@ -103,14 +103,6 @@ fun DashboardScreen(
             fontSize = 24.sp,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-//        filteredStudents.forEach { student ->
-//            Text(
-//                text = student,
-//                color = Color.White,
-//                fontSize = 18.sp,
-//                modifier = Modifier.padding(vertical = 4.dp)
-//            )
-//        }
 
         // Espaçamento entre as listas
         Spacer(modifier = Modifier.height(24.dp))
@@ -122,14 +114,7 @@ fun DashboardScreen(
             fontSize = 24.sp,
             modifier = Modifier.padding(vertical = 8.dp)
         )
-//        filteredProfessors.forEach { professor ->
-//            Text(
-//                text = professor,
-//                color = Color.White,
-//                fontSize = 18.sp,
-//                modifier = Modifier.padding(vertical = 4.dp)
-//            )
-//        }
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
