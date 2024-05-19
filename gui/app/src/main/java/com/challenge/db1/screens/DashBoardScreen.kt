@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.challenge.db1.components.CardProductItem
 import com.challenge.db1.components.UsersSection
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.sampledata.SampleAlunos
@@ -60,19 +62,28 @@ fun DashboardScreen(
             Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(35.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-
-            for (section in sections) {
-                val title = section.key
-                val alunoEProfessor = section.value
-                item {
-                    UsersSection(
-                        title = title,
-                        alunosEProfessor = alunoEProfessor
+            if (searchText.isBlank()) {
+                for (section in sections) {
+                    val title = section.key
+                    val alunoEProfessor = section.value
+                    item {
+                        UsersSection(
+                            title = title,
+                            alunosEProfessor = alunoEProfessor
+                        )
+                    }
+                }
+            } else {
+                items(SampleAlunos) { p ->
+                    CardProductItem(
+                        alunoEProfessor = p,
+                        Modifier.padding(horizontal = 16.dp)
                     )
                 }
             }
+
         }
 
         // Lista de Alunos
@@ -127,7 +138,7 @@ fun SearchTextField(
             .background(Color.White, RoundedCornerShape(8.dp))
             .padding(horizontal = 16.dp, vertical = 12.dp),
 
-    ) {
+        ) {
         BasicTextField(
             value = searchText,
             onValueChange = onSearchChange,
