@@ -1,5 +1,6 @@
 package com.challenge.db1.sampledata
 
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.challenge.db1.domain.AlunoEProfessor
 
 val SampleAlunos = listOf(
@@ -9,7 +10,7 @@ val SampleAlunos = listOf(
         true,
         "Java",
         "Programar",
-        "Fiap"
+         academic_education = LoremIpsum(20).values.first()
     ),
     AlunoEProfessor(
         name = "Aluno2",
@@ -17,7 +18,7 @@ val SampleAlunos = listOf(
         true,
         "Java",
         "Programar",
-        "Fiap"
+        "React, typescript, javascript, java, c#, html, css,"
     ),
 
     AlunoEProfessor(
@@ -26,7 +27,7 @@ val SampleAlunos = listOf(
         true,
         "Java",
         "Programar",
-        "Fiap"
+        "React, typescript, javascript, java, c#, html, css,"
     )
 
 )
@@ -38,7 +39,7 @@ val SampleProfessor = listOf(
         true,
         "Java",
         "Programar",
-        "Fiap"
+        "React, typescript, javascript, java, c#, html, css,"
     ),
     AlunoEProfessor(
         name = "TesteProfessor2",
@@ -46,7 +47,7 @@ val SampleProfessor = listOf(
         true,
         "TypeScript",
         "Programar",
-        "Fiap"
+        "React, typescript, javascript, java, c#, html, css,"
     ),
 
     AlunoEProfessor(
@@ -55,7 +56,7 @@ val SampleProfessor = listOf(
         true,
         "React",
         "Programar",
-        "Fiap"
+        "React"
     )
 )
 
