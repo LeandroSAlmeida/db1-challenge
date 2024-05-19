@@ -30,6 +30,7 @@ import com.challenge.db1.components.CardProductItem
 import com.challenge.db1.components.UsersSection
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.sampledata.SampleAlunos
+import com.challenge.db1.sampledata.SampleProfessor
 import com.challenge.db1.sampledata.SampleSections
 import com.challenge.db1.ui.theme.ColorPrimary
 
@@ -40,8 +41,17 @@ fun DashboardScreen(
 ) {
     var searchText by remember { mutableStateOf("") }
 
-    //val filteredStudents = students.filter { it.contains(searchText, ignoreCase = true) }
-    //val filteredProfessors = professors.filter { it.contains(searchText, ignoreCase = true) }
+    val combinedList = SampleAlunos + SampleProfessor
+
+    val searchedAluno = remember(searchText){
+        combinedList.filter { alunosEProfessor ->
+            alunosEProfessor.name.contains(searchText, ignoreCase = true) ||
+                    alunosEProfessor.academic_education?.contains(searchText, ignoreCase = true) ?:false
+        }
+    }
+
+
+
 
     Column(
         modifier = Modifier
@@ -76,7 +86,7 @@ fun DashboardScreen(
                     }
                 }
             } else {
-                items(SampleAlunos) { p ->
+                items(searchedAluno) { p ->
                     CardProductItem(
                         alunoEProfessor = p,
                         Modifier.padding(horizontal = 16.dp)

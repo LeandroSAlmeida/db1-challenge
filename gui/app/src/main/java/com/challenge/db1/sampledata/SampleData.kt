@@ -27,10 +27,35 @@ val SampleAlunos = listOf(
         true,
         "Java",
         "Programar",
+        "React, typescript, javascript, java, c#, html, css,"),
+
+    AlunoEProfessor(
+                name = "TesteProfessor",
+        null,
+        true,
+        "Java",
+        "Programar",
         "React, typescript, javascript, java, c#, html, css,"
+    ),
+    AlunoEProfessor(
+        name = "TesteProfessor2",
+        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/461.jpg",
+        true,
+        "TypeScript",
+        "Programar",
+        "React, typescript, javascript, java, c#, html, css,"
+    ),
+
+    AlunoEProfessor(
+        name = "TesteProfessor3",
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Fbr%2Ficone-gratis%2Faluno_3413565&psig=AOvVaw2lniMx19rB_-Po4s_avwdB&ust=1716207081949000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLCqn_jXmYYDFQAAAAAdAAAAABAD",
+        true,
+        "React",
+        "Programar",
+        "React"
+    )
     )
 
-)
 
 val SampleProfessor = listOf(
     AlunoEProfessor(
