@@ -33,9 +33,16 @@ import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.ui.theme.ColorThird
 
 @Composable
-fun CardComponent(alunoEProfessor: AlunoEProfessor){
+fun CardComponent(
+    alunoEProfessor: AlunoEProfessor,
+    modifier: Modifier = Modifier
+){
 
-    Surface(shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
+    Surface(
+        modifier,
+        shape = RoundedCornerShape(15.dp),
+        shadowElevation = 4.dp
+    ) {
 
         Column(
             Modifier

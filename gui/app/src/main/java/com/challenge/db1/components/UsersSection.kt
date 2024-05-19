@@ -21,9 +21,10 @@ import com.challenge.db1.sampledata.SampleAlunos
 @Composable
 fun UsersSection(
     title: String,
-    alunosEProfessor: List<AlunoEProfessor>
+    alunosEProfessor: List<AlunoEProfessor>,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(modifier) {
         Text(
             text = title,
             Modifier.padding(
