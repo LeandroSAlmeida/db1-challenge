@@ -1,6 +1,7 @@
 
 package com.challenge.db1.navigation
 
+import DashboardScreen
 import SkillsScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -33,6 +34,9 @@ fun MyAppNavigation(){
         }
         composable("successful",){
             RegistrationSuccessScreen(navController = navController)
+        }
+        composable("dashboard",){
+            DashboardScreen(navController = navController)
         }
     } )
 }

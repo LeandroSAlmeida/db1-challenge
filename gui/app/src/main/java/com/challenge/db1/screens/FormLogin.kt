@@ -144,6 +144,7 @@ fun FormLogin(navController: NavController) {
 
                 Button(
                     onClick = {
+                        navController.navigate("dashboard")
                     },
                     modifier = Modifier
                         .width(400.dp)
