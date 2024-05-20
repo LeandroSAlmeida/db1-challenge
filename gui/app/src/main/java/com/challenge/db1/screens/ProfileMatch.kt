@@ -1,12 +1,11 @@
+package com.challenge.db1.notification
+
+import android.Manifest
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,12 +27,27 @@ import androidx.navigation.NavController
 import com.challenge.db1.R
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.ui.theme.ColorThird
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ProfileScreen(
     alunoEProfessor: AlunoEProfessor,
-    navController: NavController
+    navController: NavController,
+    context: Context
 ) {
+    val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+    val notificationHandler = NotificationHandler(context)
+
+    LaunchedEffect(key1 = true) {
+        if (!postNotificationPermission.status.isGranted) {
+            postNotificationPermission.launchPermissionRequest()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,6 +107,7 @@ fun ProfileScreen(
                 onClick = {
                     // Verificando o match
                     if (verificarMatch(alunoEProfessor)) {
+                        notificationHandler.showSimpleNotification() // Mostrar notificação
                         navController.navigate("match")
                     } else {
                         navController.popBackStack() // Retorna para o Dashboard

@@ -71,6 +71,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
 
 
 
