@@ -94,7 +94,7 @@ fun ProfileScreen(
                     if (verificarMatch(alunoEProfessor)) {
                         navController.navigate("match")
                     } else {
-                        navController.navigate("dashboard")
+                        navController.popBackStack() // Retorna para o Dashboard
                     }
                 },
                 colors = ButtonDefaults.buttonColors(ColorThird)
@@ -102,7 +102,7 @@ fun ProfileScreen(
                 Text(text = "Match", color = Color.White)
             }
             Button(
-                onClick = { navController.navigate("dashboard") },
+                onClick = { navController.popBackStack() }, // Retorna para o Dashboard
                 colors = ButtonDefaults.buttonColors(ColorThird)
             ) {
                 Text(text = "Não", color = Color.White)
@@ -115,5 +115,5 @@ fun ProfileScreen(
 // Função para verificar se houve match entre dois perfis
 fun verificarMatch(alunoEProfessor: AlunoEProfessor): Boolean {
     // Simulando a lógica de match (por exemplo, se o aluno é mentor)
-    return alunoEProfessor.isMentor
+    return alunoEProfessor.match
 }

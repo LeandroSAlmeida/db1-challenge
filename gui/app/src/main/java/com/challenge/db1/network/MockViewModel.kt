@@ -34,7 +34,7 @@ class MockViewModel : ViewModel() {
                             habilities = it.habilities ?: "",
                             interests = it.interests ?: "",
                             academic_education = it.academic_education,
-                            match = it.isMentor ?: false,
+                            match = it.match ?: false
                         )
                     } ?: emptyList()
                 } else {

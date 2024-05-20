@@ -9,7 +9,8 @@ data class MockResponse(
     val isMentor: Boolean?,
     val habilities: String,
     val interests: String,
-    val academic_education: String?
+    val academic_education: String?,
+    val match: Boolean?
 )
 
 interface RestApiService {
