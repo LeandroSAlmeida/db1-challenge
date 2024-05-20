@@ -13,12 +13,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -28,7 +28,6 @@ import com.challenge.db1.R
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.ui.theme.ColorThird
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -37,16 +36,10 @@ import com.google.accompanist.permissions.rememberPermissionState
 fun ProfileScreen(
     alunoEProfessor: AlunoEProfessor,
     navController: NavController,
-    context: Context
+    context: Context // <- Adicionado parâmetro context
 ) {
     val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
     val notificationHandler = NotificationHandler(context)
-
-    LaunchedEffect(key1 = true) {
-        if (!postNotificationPermission.status.isGranted) {
-            postNotificationPermission.launchPermissionRequest()
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -107,7 +100,10 @@ fun ProfileScreen(
                 onClick = {
                     // Verificando o match
                     if (verificarMatch(alunoEProfessor)) {
-                        notificationHandler.showSimpleNotification() // Mostrar notificação
+                        notificationHandler.showSimpleNotification(
+                            title = "Match Found!",
+                            message = "You have a new match with ${alunoEProfessor.name}!"
+                        )
                         navController.navigate("match")
                     } else {
                         navController.popBackStack() // Retorna para o Dashboard
