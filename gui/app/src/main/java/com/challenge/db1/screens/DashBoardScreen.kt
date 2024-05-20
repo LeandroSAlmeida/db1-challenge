@@ -3,15 +3,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,34 +23,35 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.components.CardProductItem
 import com.challenge.db1.components.UsersSection
-import com.challenge.db1.domain.AlunoEProfessor
-import com.challenge.db1.sampledata.SampleAlunos
-import com.challenge.db1.sampledata.SampleProfessor
-import com.challenge.db1.sampledata.SampleSections
+import com.challenge.db1.network.MockViewModel
 import com.challenge.db1.ui.theme.ColorPrimary
 
 @Composable
 fun DashboardScreen(
     navController: NavController,
-    sections: Map<String, List<AlunoEProfessor>>
+    viewModel: MockViewModel = viewModel()
 ) {
     var searchText by remember { mutableStateOf("") }
+    val mockData by viewModel.mockData
+    val isLoading by viewModel.isLoading
+    val errorMessage by viewModel.errorMessage
 
-    val combinedList = SampleAlunos + SampleProfessor
+    val combinedList = mockData
 
-    val searchedAluno = remember(searchText){
+    val searchedAluno = remember(searchText, combinedList) {
         combinedList.filter { alunosEProfessor ->
             alunosEProfessor.name.contains(searchText, ignoreCase = true) ||
-                    alunosEProfessor.academic_education?.contains(searchText, ignoreCase = true) ?:false
+                    alunosEProfessor.academic_education?.contains(
+                        searchText,
+                        ignoreCase = true
+                    ) ?: false
         }
     }
-
-
-
 
     Column(
         modifier = Modifier
@@ -68,60 +68,49 @@ fun DashboardScreen(
                 .padding(bottom = 16.dp)
         )
 
-        LazyColumn(
-            Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(35.dp),
-            contentPadding = PaddingValues(bottom = 16.dp)
-        ) {
-            if (searchText.isBlank()) {
-                for (section in sections) {
-                    val title = section.key
-                    val alunoEProfessor = section.value
-                    item {
-                        UsersSection(
-                            title = title,
-                            alunosEProfessor = alunoEProfessor
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+        } else if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(16.dp)
+            )
+        } else {
+            LazyColumn(
+                Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(35.dp),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
+                if (searchText.isBlank()) {
+                    // Mostrar seções quando o campo de pesquisa está vazio
+                    for (section in searchedAluno.groupBy { it.habilities }) {
+                        val title = section.key
+                        val alunosEProfessor = section.value
+                        item {
+                            UsersSection(
+                                title = title,
+                                alunosEProfessor = alunosEProfessor
+                            )
+                        }
+                    }
+                } else {
+                    // Filtrar resultados por habilidade quando há texto no campo de pesquisa
+                    val filteredAlunos = searchedAluno.filter { aluno ->
+                        aluno.habilities.contains(searchText, ignoreCase = true) ||
+                                aluno.name.contains(searchText, ignoreCase = true)
+                    }
+                    items(filteredAlunos) { alunoOuProfessor ->
+                        CardProductItem(
+                            alunoEProfessor = alunoOuProfessor,
+                            Modifier.padding(horizontal = 16.dp)
                         )
                     }
                 }
-            } else {
-                items(searchedAluno) { p ->
-                    CardProductItem(
-                        alunoEProfessor = p,
-                        Modifier.padding(horizontal = 16.dp)
-                    )
-                }
             }
-
         }
-
-        // Lista de Alunos
-        Text(
-            text = "Alunos",
-            color = Color.White,
-            fontSize = 24.sp,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-
-        // Espaçamento entre as listas
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Lista de Professores
-        Text(
-            text = "Professores",
-            color = Color.White,
-            fontSize = 24.sp,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
     }
 }
-
 @Composable
 fun SearchTextField(
     searchText: String,
@@ -149,9 +138,8 @@ fun SearchTextField(
     }
 }
 
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DashboardScreenPreview() {
-    DashboardScreen(sections = SampleSections, navController = rememberNavController())
+    DashboardScreen(navController = rememberNavController())
 }

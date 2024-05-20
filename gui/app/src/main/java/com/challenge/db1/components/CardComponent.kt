@@ -90,7 +90,13 @@ fun CardComponent(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = alunoEProfessor.habilities,
+                    text = "Professor: ${alunoEProfessor.isMentor}",
+                    Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(400)
+                )
+                Text(
+                    text = "Locale: ${alunoEProfessor.isMentor}",
                     Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)

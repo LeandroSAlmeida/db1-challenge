@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.challenge.db1.sampledata.SampleSections
 import com.challenge.db1.screens.ForgotPasswordScreen
 import com.challenge.db1.screens.FormLogin
 import com.challenge.db1.screens.RegistrationSuccessScreen
@@ -37,7 +36,7 @@ fun MyAppNavigation(){
             RegistrationSuccessScreen(navController = navController)
         }
         composable("dashboard"){
-            DashboardScreen(navController = navController, sections = SampleSections)
+            DashboardScreen(navController = navController)
         }
     } )
 }

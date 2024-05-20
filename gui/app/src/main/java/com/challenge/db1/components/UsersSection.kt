@@ -22,7 +22,8 @@ import com.challenge.db1.sampledata.SampleAlunos
 fun UsersSection(
     title: String,
     alunosEProfessor: List<AlunoEProfessor>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    
 ) {
     Column(modifier) {
         Text(
