@@ -13,6 +13,6 @@ data class MockResponse(
 )
 
 interface RestApiService {
-    @GET("/api/v1/users")
+    @GET("/api/v1/users/AlunosEProfessores")
     fun getMockData(): Call<List<MockResponse>>
 }

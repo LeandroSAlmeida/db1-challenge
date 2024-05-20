@@ -67,7 +67,7 @@ fun MatchScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(200.dp))
         Button(
             onClick = {
-                navController.navigate("login") },
+                navController.navigate("dashboard") },
             modifier = Modifier.fillMaxWidth()
                 .size(60.dp),
             colors = ButtonDefaults.buttonColors(

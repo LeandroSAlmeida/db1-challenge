@@ -86,13 +86,20 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(
-                onClick = { /* Implementar lógica para Match */ },
+                onClick = {
+                    // Implementando a lógica de match
+                    val match = verificarMatch(alunoEProfessor)
+                    if (match) {
+                        navController.navigate("match")
+                    } else {
+                        navController.navigate("dashboard")
+                    } },
                 colors = ButtonDefaults.buttonColors(ColorThird)
             ) {
                 Text(text = "Match", color = Color.White)
             }
             Button(
-                onClick = { /* Implementar lógica para Não */ },
+                onClick = { navController.navigate("dashboard") },
                 colors = ButtonDefaults.buttonColors(ColorThird)
             ) {
                 Text(text = "Não", color = Color.White)
@@ -100,6 +107,20 @@ fun ProfileScreen(
         }
         Spacer(modifier = Modifier.height(20.dp))
     }
+}
+
+
+// Função para verificar se houve match entre dois perfis
+fun verificarMatch(alunoEProfessor: AlunoEProfessor): Boolean {
+    // Aqui você define a lógica de match
+    // Por exemplo, um match ocorre se os interesses de um perfil forem as habilidades do outro e vice-versa
+    // Vou implementar uma lógica simples de match para demonstração
+
+    // Condição para match: interesses do alunoEProfessor são as habilidades do usuário atual e vice-versa
+    val match = alunoEProfessor.habilities.contains(alunoEProfessor.interests, ignoreCase = true) &&
+            alunoEProfessor.interests.contains(alunoEProfessor.habilities, ignoreCase = true)
+
+    return match
 }
 
 //@Preview

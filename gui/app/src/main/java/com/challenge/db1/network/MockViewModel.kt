@@ -1,4 +1,3 @@
-// MockViewModel.kt
 package com.challenge.db1.network
 
 import androidx.compose.runtime.mutableStateOf
@@ -28,12 +27,14 @@ class MockViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     mockData.value = response.body()?.map {
                         AlunoEProfessor(
+                            id = it.id,
                             name = it.name,
-                            avatar = "", // Atualize conforme necessário
+                            avatar = "",
                             isMentor = it.isMentor ?: false,
                             habilities = it.habilities ?: "",
                             interests = it.interests ?: "",
-                            academic_education = it.academic_education
+                            academic_education = it.academic_education,
+                            match = it.isMentor ?: false,
                         )
                     } ?: emptyList()
                 } else {
