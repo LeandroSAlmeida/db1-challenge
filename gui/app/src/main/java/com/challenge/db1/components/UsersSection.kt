@@ -23,13 +23,16 @@ fun UsersSection(
     Column(modifier) {
         Text(
             text = title,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            modifier = Modifier.padding
+                (start = 16.dp, end = 16.dp),
             fontSize = 20.sp,
             color = Color.White
         )
         LazyRow(
-            modifier = Modifier
-                .padding(top = 8.dp)
+            Modifier
+                .padding(
+                    top = 8.dp
+                )
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)

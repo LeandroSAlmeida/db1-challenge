@@ -9,10 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.screens.ForgotPasswordScreen
 import com.challenge.db1.screens.FormLogin
 import com.challenge.db1.screens.RegistrationSuccessScreen
 import com.challenge.db1.screens.SignUp
+import com.google.gson.Gson
 
 @Composable
 fun MyAppNavigation() {
@@ -37,16 +39,12 @@ fun MyAppNavigation() {
             DashboardScreen(navController = navController)
         }
         composable(
-            route = "profile/{name}",
-            arguments = listOf(navArgument("name") { type = NavType.StringType })
+            route = "profile/{alunoEProfessorJson}",
+            arguments = listOf(navArgument("alunoEProfessorJson") { type = NavType.StringType })
         ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name")
-            ProfileScreen(
-                name = name,
-                navController = navController,
-                onMatchClicked = { /* TODO: Handle match click */ },
-                onRejectClicked = { /* TODO: Handle reject click */ }
-            )
+            val alunoEProfessorJson = backStackEntry.arguments?.getString("alunoEProfessorJson")
+            val alunoEProfessor = Gson().fromJson(alunoEProfessorJson, AlunoEProfessor::class.java)
+            ProfileScreen(alunoEProfessor = alunoEProfessor, navController = navController)
         }
     }
 }

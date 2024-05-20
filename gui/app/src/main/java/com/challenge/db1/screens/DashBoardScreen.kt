@@ -20,16 +20,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.components.CardProductItem
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.network.MockViewModel
 import com.challenge.db1.ui.theme.ColorPrimary
+import com.google.gson.Gson
 
 @Composable
 fun DashboardScreen(
@@ -41,9 +40,9 @@ fun DashboardScreen(
     val isLoading by viewModel.isLoading
     val errorMessage by viewModel.errorMessage
 
-    // Callback para lidar com o clique no card
     val onCardClicked: (AlunoEProfessor) -> Unit = { alunoEProfessor ->
-        navController.navigate("profile/${alunoEProfessor.name}")
+        val alunoEProfessorJson = Gson().toJson(alunoEProfessor)
+        navController.navigate("profile/$alunoEProfessorJson")
     }
 
     val combinedList = mockData
@@ -51,10 +50,7 @@ fun DashboardScreen(
     val searchedAluno = remember(searchText, combinedList) {
         combinedList.filter { alunosEProfessor ->
             alunosEProfessor.name.contains(searchText, ignoreCase = true) ||
-                    alunosEProfessor.academic_education?.contains(
-                        searchText,
-                        ignoreCase = true
-                    ) ?: false
+                    alunosEProfessor.academic_education?.contains(searchText, ignoreCase = true) ?: false
         }
     }
 
@@ -64,7 +60,6 @@ fun DashboardScreen(
             .background(ColorPrimary)
             .padding(16.dp)
     ) {
-        // Campo de Pesquisa Avançada
         SearchTextField(
             searchText = searchText,
             onSearchChange = { searchText = it },
@@ -88,7 +83,6 @@ fun DashboardScreen(
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 if (searchText.isBlank()) {
-                    // Mostrar seções quando o campo de pesquisa está vazio
                     for (section in searchedAluno.groupBy { it.habilities }) {
                         val title = section.key
                         val alunosEProfessor = section.value
@@ -96,12 +90,11 @@ fun DashboardScreen(
                             UsersSection(
                                 title = title,
                                 alunosEProfessor = alunosEProfessor,
-                                onCardClicked = onCardClicked // Passe o callback
+                                onCardClicked = onCardClicked
                             )
                         }
                     }
                 } else {
-                    // Filtrar resultados por habilidade quando há texto no campo de pesquisa
                     val filteredAlunos = searchedAluno.filter { aluno ->
                         aluno.habilities.contains(searchText, ignoreCase = true) ||
                                 aluno.name.contains(searchText, ignoreCase = true)
@@ -109,7 +102,7 @@ fun DashboardScreen(
                     items(filteredAlunos) { alunoOuProfessor ->
                         CardProductItem(
                             alunoEProfessor = alunoOuProfessor,
-                            onCardClicked = { onCardClicked(alunoOuProfessor) }, // Chame o callback
+                            onCardClicked = { onCardClicked(alunoOuProfessor) },
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
@@ -145,8 +138,3 @@ fun SearchTextField(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun DashboardScreenPreview() {
-    DashboardScreen(navController = rememberNavController())
-}
