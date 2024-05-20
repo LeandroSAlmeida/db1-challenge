@@ -1,7 +1,6 @@
-package com.challenge.db1.components
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +24,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.challenge.db1.R
@@ -35,22 +33,21 @@ import com.challenge.db1.ui.theme.ColorThird
 @Composable
 fun CardComponent(
     alunoEProfessor: AlunoEProfessor,
+    onCardClicked: () -> Unit, // Adiciona o callback como parâmetro
     modifier: Modifier = Modifier
-){
-
+) {
     Surface(
-        modifier,
+        modifier = modifier
+            .clickable { onCardClicked() } // Adiciona o evento de clique
+            .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
         shadowElevation = 4.dp
     ) {
-
         Column(
             Modifier
                 .heightIn(250.dp, 300.dp)
                 .width(200.dp)
                 .background(Color.White)
-                .background(Color.White)
-
         ) {
             val imageSize = 100.dp
             Box(
@@ -65,58 +62,46 @@ fun CardComponent(
                         )
                     )
                     .fillMaxWidth()
-
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable._4b6993eb_adf0_4bf8_bf62_c5139a360e0c),
                     contentDescription = "Image",
                     Modifier
                         .size(imageSize)
-                        .offset(y = imageSize/2)
+                        .offset(y = imageSize / 2)
                         .clip(shape = RoundedCornerShape(20.dp))
                         .align(Alignment.BottomCenter),
                     contentScale = ContentScale.Crop
                 )
             }
-            Spacer(modifier = Modifier.height(imageSize/2))
-
-            Column(modifier = Modifier
-                .padding(16.dp)) {
+            Spacer(modifier = Modifier.height(imageSize / 2))
+            Text(
+                text = alunoEProfessor.name,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = alunoEProfessor.habilities,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Gray,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            alunoEProfessor.academic_education?.let {
                 Text(
-                    text = alunoEProfessor.name,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight(700),
+                    text = it,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color.DarkGray,
+                    modifier = Modifier.padding(8.dp),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = "Professor: ${alunoEProfessor.isMentor}",
-                    Modifier.padding(top = 8.dp),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(400)
-                )
-                Text(
-                    text = "Locale: ${alunoEProfessor.isMentor}",
-                    Modifier.padding(top = 8.dp),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(400)
                 )
             }
         }
     }
-}
-
-
-
-
-
-
-@Preview
-@Composable
-fun CardComponentPreview(){
-    CardComponent(
-        AlunoEProfessor(
-            name = "Leandro", null,true,"Java","Programar","Fiap"
-        )
-    )
 }

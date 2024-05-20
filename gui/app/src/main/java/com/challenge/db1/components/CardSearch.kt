@@ -2,6 +2,7 @@ package com.challenge.db1.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,16 +25,14 @@ import com.challenge.db1.ui.theme.ColorPrimary
 @Composable
 fun CardProductItem(
     alunoEProfessor: AlunoEProfessor,
+    onCardClicked: (AlunoEProfessor) -> Unit,
     modifier: Modifier = Modifier,
     elevation: Dp = 4.dp
 ) {
     Card(
-        modifier
-            .fillMaxWidth()
-            .heightIn(150.dp),
-        elevation = CardDefaults.cardElevation(elevation),
-
-        ) {
+        modifier = modifier.clickable { onCardClicked(alunoEProfessor) },
+        elevation = CardDefaults.cardElevation(elevation)
+    ) {
         Column {
             Image(
                 painter = painterResource(id = R.drawable._4b6993eb_adf0_4bf8_bf62_c5139a360e0c),

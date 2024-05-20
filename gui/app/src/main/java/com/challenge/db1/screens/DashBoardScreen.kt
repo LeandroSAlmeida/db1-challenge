@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.challenge.db1.components.CardProductItem
-import com.challenge.db1.components.UsersSection
+import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.network.MockViewModel
 import com.challenge.db1.ui.theme.ColorPrimary
 
@@ -40,6 +40,11 @@ fun DashboardScreen(
     val mockData by viewModel.mockData
     val isLoading by viewModel.isLoading
     val errorMessage by viewModel.errorMessage
+
+    // Callback para lidar com o clique no card
+    val onCardClicked: (AlunoEProfessor) -> Unit = { alunoEProfessor ->
+        navController.navigate("profile/${alunoEProfessor.name}")
+    }
 
     val combinedList = mockData
 
@@ -90,7 +95,8 @@ fun DashboardScreen(
                         item {
                             UsersSection(
                                 title = title,
-                                alunosEProfessor = alunosEProfessor
+                                alunosEProfessor = alunosEProfessor,
+                                onCardClicked = onCardClicked // Passe o callback
                             )
                         }
                     }
@@ -103,7 +109,8 @@ fun DashboardScreen(
                     items(filteredAlunos) { alunoOuProfessor ->
                         CardProductItem(
                             alunoEProfessor = alunoOuProfessor,
-                            Modifier.padding(horizontal = 16.dp)
+                            onCardClicked = { onCardClicked(alunoOuProfessor) }, // Chame o callback
+                            modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
                 }
@@ -111,6 +118,7 @@ fun DashboardScreen(
         }
     }
 }
+
 @Composable
 fun SearchTextField(
     searchText: String,
@@ -121,8 +129,7 @@ fun SearchTextField(
         modifier = modifier
             .background(Color.White, RoundedCornerShape(8.dp))
             .padding(horizontal = 16.dp, vertical = 12.dp),
-
-        ) {
+    ) {
         BasicTextField(
             value = searchText,
             onValueChange = onSearchChange,
