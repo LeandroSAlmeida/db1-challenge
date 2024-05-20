@@ -50,7 +50,7 @@ fun DashboardScreen(
     val searchedAluno = remember(searchText, combinedList) {
         combinedList.filter { alunosEProfessor ->
             alunosEProfessor.name.contains(searchText, ignoreCase = true) ||
-                    alunosEProfessor.academic_education?.contains(searchText, ignoreCase = true) ?: false
+                    alunosEProfessor.habilities?.contains(searchText, ignoreCase = true) ?: false
         }
     }
 
