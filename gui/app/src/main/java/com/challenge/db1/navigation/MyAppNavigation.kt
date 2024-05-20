@@ -12,6 +12,7 @@ import androidx.navigation.navArgument
 import com.challenge.db1.domain.AlunoEProfessor
 import com.challenge.db1.screens.ForgotPasswordScreen
 import com.challenge.db1.screens.FormLogin
+import com.challenge.db1.screens.MatchScreen
 import com.challenge.db1.screens.RegistrationSuccessScreen
 import com.challenge.db1.screens.SignUp
 import com.google.gson.Gson
@@ -45,6 +46,9 @@ fun MyAppNavigation() {
             val alunoEProfessorJson = backStackEntry.arguments?.getString("alunoEProfessorJson")
             val alunoEProfessor = Gson().fromJson(alunoEProfessorJson, AlunoEProfessor::class.java)
             ProfileScreen(alunoEProfessor = alunoEProfessor, navController = navController)
+        }
+        composable("match") {
+            MatchScreen(navController = navController)
         }
     }
 }
