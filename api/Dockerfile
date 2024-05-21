@@ -4,17 +4,14 @@ LABEL maintainer="Gabriel Victor <gabrielvictorweb@gmail.com>"
 
 LABEL description="This Dockerfile installs node"
 
-# Create app directory
-WORKDIR /api
+WORKDIR /app
 
-# Bundle files
-COPY ./api .
+COPY package*.json ./
 
-#Update npm 
-RUN npm install -g npm@latest
-
-# Install dependencies
 RUN npm install
 
-# Expose port 8000
-EXPOSE 8000
+COPY . .
+
+RUN npm run build
+
+CMD [ "npm", "run", "start:prod" ]

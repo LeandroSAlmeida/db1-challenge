@@ -1,15 +1,12 @@
 version: "3.8"
 services:
-  nodejs:
-    entrypoint: .docker/entrypoint.sh
+  app:
     build:
-      context: .
-      dockerfile: ./api/Dockerfile
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: nest-docker-postgres    
     ports:
-      - 8000:8000
-    environment:
-      - DATABASE_URL=file:./dev.db
+      - '3000:3000' 
+      - '4000:4000' 
     volumes:
-      - ./api:/api
-    image: "nodejs"
-    container_name: api-db1
+      - ./src:/app/src
